@@ -1,0 +1,33 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        //maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://storage.googleapis.com/download.flutter.io'
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        //maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://storage.googleapis.com/download.flutter.io'
+        }
+    }
+}
+rootProject.name = "AddToAppTestAndroid"
+include ':app'
+
+setBinding(new Binding([gradle: this]))                                // new
+evaluate(new File(                                                     // new
+        settingsDir.parentFile,
+        'my_flutter_module/.android/include_flutter.groovy'                         // new
+))
+
+include ':my_flutter_module'
+project(':my_flutter_module').projectDir = new File('../my_flutter_module')
