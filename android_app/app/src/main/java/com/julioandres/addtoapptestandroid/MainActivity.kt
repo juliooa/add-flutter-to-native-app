@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.julioandres.addtoapptestandroid.databinding.ActivityMainBinding
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngineCache
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,7 +19,17 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         binding.buttonFirst.setOnClickListener {
-            startActivity(FlutterActivity.createDefaultIntent(this))
+            startActivity(FlutterActivity
+                .withCachedEngine("mi_engine")
+                .build(this))
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        FlutterEngineCache
+            .getInstance()
+            .get("mi_engine")
+            ?.destroy();
     }
 }
